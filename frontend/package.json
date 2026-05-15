@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev -H 127.0.0.1",
-    "build": "cross-env NODE_OPTIONS=\"--require F:/BossAI/auto_hr02/auto_hr/frontend/fix-readlink.js\" next build",
+    "build": "cross-env NODE_OPTIONS=\"--require ./fix-readlink.js\" next build",
     "start": "next start",
     "lint": "next lint"
   },
