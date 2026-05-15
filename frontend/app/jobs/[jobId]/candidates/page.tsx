@@ -7,6 +7,10 @@ import { PageHeader } from "@/components/page-header";
 import { getCandidates, getProfileWorkbench, getTask } from "@/lib/api";
 import type { CandidateDetail, JobProfile, ScreeningBlueprint, ScreeningTask } from "@/lib/types";
 
+export async function generateStaticParams() {
+  return [{ jobId: "job-001" }];
+}
+
 
 function profileToBlueprint(profile: JobProfile | null | undefined): ScreeningBlueprint | null {
   if (!profile) {
