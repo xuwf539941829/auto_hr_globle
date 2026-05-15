@@ -2,6 +2,10 @@ import { PageHeader } from "@/components/page-header";
 import { ProfileDraftWorkspace } from "@/components/profile-draft-workspace";
 import { getJobs } from "@/lib/api";
 
+export async function generateStaticParams() {
+  return [{ jobId: "job-001" }];
+}
+
 export default async function ProfileDraftPage({
   params
 }: {

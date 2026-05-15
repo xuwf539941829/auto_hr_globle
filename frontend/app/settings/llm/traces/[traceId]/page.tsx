@@ -4,6 +4,10 @@ import { PageHeader } from "@/components/page-header";
 import { TraceAutoRefresh } from "@/components/trace-auto-refresh";
 import { getLLMTrace } from "@/lib/api";
 
+export async function generateStaticParams() {
+  return [{ traceId: "trace-001" }];
+}
+
 export default async function LLMTraceDetailPage({
   params,
 }: {
