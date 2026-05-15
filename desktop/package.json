@@ -1,0 +1,75 @@
+{
+  "name": "auto-hr",
+  "version": "1.0.0",
+  "description": "Auto HR Copilot — 自动招聘执行平台",
+  "main": "main.js",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --win",
+    "build:dir": "electron-builder --win --dir"
+  },
+  "devDependencies": {
+    "electron": "^33.0.0",
+    "electron-builder": "24.13.3"
+  },
+  "build": {
+    "appId": "com.authr.copilot",
+    "productName": "Auto HR",
+    "copyright": "Copyright © 2026",
+    "directories": {
+      "output": "../dist/desktop",
+      "buildResources": "build-resources"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "../dist/backend/",
+        "to": "backend/",
+        "filter": [
+          "**/*"
+        ]
+      },
+      {
+        "from": "../frontend/.next/standalone/",
+        "to": "frontend/",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Auto HR"
+    },
+    "portable": {
+      "artifactName": "AutoHR-portable-${version}.exe"
+    }
+  },
+  "dependencies": {
+    "bluebird": "^3.7.2"
+  }
+}

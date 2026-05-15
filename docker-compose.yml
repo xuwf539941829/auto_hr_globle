@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  auto-hr-backend:
+    image: ${REGISTRY:-docker.io}/${IMAGE_NAME:-auto-hr-backend}:${TAG:-latest}
+    container_name: auto-hr-backend
+    ports:
+      - "${BACKEND_PORT:-8000}:8000"
+    environment:
+      # CORS 配置：允许 Cloudflare Pages 和本地开发
+      - CORS_ORIGINS=${CORS_ORIGINS:-https://auto-hr.pages.dev,http://localhost:3000}
+
+      # LLM 配置
+      - AUTO_HR_LLM_API_KEY=${AUTO_HR_LLM_API_KEY}
+      - AUTO_HR_LLM_BASE_URL=${AUTO_HR_LLM_BASE_URL}
+      - AUTO_HR_LLM_MODEL=${AUTO_HR_LLM_MODEL:-gpt-4-mini}
+      - AUTO_HR_LLM_API_STYLE=${AUTO_HR_LLM_API_STYLE:-chat_completions}
+      - AUTO_HR_LLM_TIMEOUT_SECONDS=${AUTO_HR_LLM_TIMEOUT_SECONDS:-45}
+
+      # 数据目录
+      - AUTHR_DATA_DIR=/app/storage
+
+    volumes:
+      # 持久化存储
+      - auto-hr-storage:/app/storage
+      - auto-hr-logs:/app/logs
+
+    restart: unless-stopped
+
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+
+    networks:
+      - auto-hr-network
+
+volumes:
+  auto-hr-storage:
+    driver: local
+  auto-hr-logs:
+    driver: local
+
+networks:
+  auto-hr-network:
+    driver: bridge

@@ -1,0 +1,23 @@
+{
+  "name": "auto-hr-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -H 127.0.0.1",
+    "build": "cross-env NODE_OPTIONS=\"--require F:/BossAI/auto_hr02/auto_hr/frontend/fix-readlink.js\" next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "next": "15.4.6",
+    "react": "19.1.0",
+    "react-dom": "19.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "24.0.13",
+    "@types/react": "19.1.8",
+    "@types/react-dom": "19.1.6",
+    "cross-env": "^10.1.0",
+    "typescript": "5.8.3"
+  }
+}
