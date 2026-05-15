@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  auto-hr-frontend:
+    image: ${REGISTRY}/${FRONTEND_IMAGE_NAME}:${TAG}
+    container_name: auto-hr-frontend
+    ports:
+      - "${FRONTEND_PORT}:3000"
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_API_BASE_URL=${NEXT_PUBLIC_API_BASE_URL}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+    networks:
+      - auto-hr-network
+
+  auto-hr-backend:
+    image: ${REGISTRY}/${BACKEND_IMAGE_NAME}:${TAG}
+    container_name: auto-hr-backend
+    ports:
+      - "${BACKEND_PORT}:8000"
+    environment:
+      - CORS_ORIGINS=${CORS_ORIGINS}
+      - AUTO_HR_LLM_API_KEY=${AUTO_HR_LLM_API_KEY}
+      - AUTO_HR_LLM_BASE_URL=${AUTO_HR_LLM_BASE_URL}
+      - AUTO_HR_LLM_MODEL=${AUTO_HR_LLM_MODEL}
+      - AUTO_HR_LLM_API_STYLE=${AUTO_HR_LLM_API_STYLE}
+      - AUTO_HR_LLM_TIMEOUT_SECONDS=${AUTO_HR_LLM_TIMEOUT_SECONDS}
+      - AUTHR_DATA_DIR=/app/storage
+
+    volumes:
+      - auto-hr-storage:/app/storage
+      - auto-hr-logs:/app/logs
+
+    restart: unless-stopped
+
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+
+    networks:
+      - auto-hr-network
+
+volumes:
+  auto-hr-storage:
+    driver: local
+  auto-hr-logs:
+    driver: local
+
+networks:
+  auto-hr-network:
+    driver: bridge
