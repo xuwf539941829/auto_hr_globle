@@ -5,10 +5,6 @@ import { CandidateManualActions } from "@/components/candidate-manual-actions";
 import { PageHeader } from "@/components/page-header";
 import { getCandidate, getLLMTrace } from "@/lib/api";
 
-export async function generateStaticParams() {
-  return [{ candidateId: "candidate-001" }];
-}
-
 export default async function CandidateDetailPage({
   params,
   searchParams

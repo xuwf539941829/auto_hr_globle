@@ -1,10 +1,6 @@
 import { PageHeader } from "@/components/page-header";
 import { getFeedbackSummary } from "@/lib/api";
 
-export async function generateStaticParams() {
-  return [{ jobId: "job-001" }];
-}
-
 export default async function FeedbackPage() {
   const feedback = await getFeedbackSummary();
 

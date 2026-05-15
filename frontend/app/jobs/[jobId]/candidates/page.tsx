@@ -2,10 +2,6 @@
 
 import { useEffect, useState, useCallback, useRef } from "react";
 
-export async function generateStaticParams() {
-  return [{ jobId: "job-001" }];
-}
-
 import { CandidateScreeningBoard } from "@/components/candidate-screening-board";
 import { PageHeader } from "@/components/page-header";
 import { getCandidates, getProfileWorkbench, getTask } from "@/lib/api";
